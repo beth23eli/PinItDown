@@ -60,3 +60,5 @@ To run the project locally, follow these steps:
 
 ## Video
 
+https://github.com/user-attachments/assets/bb4e2a1f-823e-4c8a-a2f8-583f8f1feed4
+
