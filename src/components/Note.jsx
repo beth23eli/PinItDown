@@ -11,13 +11,14 @@ function Note(props) {
         setNodeRef,
         transform,
         transition,
+        isDragging,
     } = useSortable({
         id: props.id,
     });
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
-        backgroundColor: props.color
+        backgroundColor: props.color,
     };
 
     function handleClick() {
@@ -28,13 +29,14 @@ function Note(props) {
     <div className="note"
          ref={setNodeRef}
          style={style}
-         {...attributes}>
+         {...attributes}
+         {...listeners}>
         <div className={"note__content"}>
             <h1>{props.title}</h1>
             <p>{props.content}</p>
         </div>
         <div className={"note__buttons"}>
-            <button {...listeners} className={"grip_button"}><Grip /></button>
+            <button  className={"grip_button"}><Grip /></button>
             <button onClick={handleClick}>
                 <DeleteIcon/>
             </button>
