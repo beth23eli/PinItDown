@@ -37,7 +37,7 @@ function CreateArea(props) {
     setNote({
       title: "",
       content: "",
-      color: actualColor
+      color: ""
     });
     setActualColor("#fff");
     event.preventDefault();

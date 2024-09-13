@@ -3,7 +3,15 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import {
+  DndContext,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  horizontalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [notes, setNotes] = useState([]);
@@ -11,12 +19,10 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
   function addNote(newNote) {
-    setNotes(prevNotes => {
-      return [...prevNotes, newNote];
-    });
-    setAllNotes(prevNotes => {
-      return [...prevNotes, newNote];
-    });
+    const noteWithId = { ...newNote, id: uuidv4() };
+
+    setNotes(prevNotes => [...prevNotes, noteWithId]);
+    setAllNotes(prevNotes => [...prevNotes, noteWithId]);
   }
 
   function deleteNote(id) {
@@ -33,21 +39,17 @@ function App() {
     });
   }
 
-  const onDragEnd = (result) => {
-    const {destination, source} = result;
+  const handleDragEnd = (event) => {
+    const {active, over} = event;
 
-    if(!destination) return;
+    if(active?.id !== over?.id) {
+      setNotes((prev) => {
+        const activeIndex = prev.findIndex((item) => item.id === active?.id);
+        const overIndex = prev.findIndex((item) => item.id === over?.id);
 
-    if (destination.index === source.index) {
-      return;
+        return arrayMove(prev, activeIndex, overIndex);
+      });
     }
-
-    const updatedNotes = Array.from(notes);
-    const [movedNote] = updatedNotes.splice(source.index, 1);
-    updatedNotes.splice(destination.index, 0, movedNote);
-
-    setNotes(updatedNotes);
-    setAllNotes(updatedNotes);
   }
 
   function handleSearch(value) {
@@ -66,42 +68,23 @@ function App() {
         <Header onSearch={handleSearch}/>
         <CreateArea onAdd={addNote} />
 
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="notes">
-            {(provided) => (
-                <div
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                    style={{ display: 'flex' }}
-                >
-                  {notes.map((noteItem, index) => (
-                      <Draggable key={index} draggableId={`${index}`} index={index}>
-                        {(provided) => (
-                            <div
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                style={{
-                                  ...provided.draggableProps.style,
-                                  marginBottom: '10px'
-                                }}
-                            >
-                              <Note
-                                  id={index}
-                                  title={noteItem.title}
-                                  content={noteItem.content}
-                                  onDelete={deleteNote}
-                                  color={noteItem.color}
-                              />
-                            </div>
-                        )}
-                      </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <DndContext onDragEnd={handleDragEnd}>
+          <SortableContext items={notes} strategy={horizontalListSortingStrategy}>
+            <div className="allNotes">
+              {notes.map((noteItem) => (
+                  <Note
+                      key={noteItem.id}
+                      item={noteItem}
+                      id={noteItem.id}
+                      title={noteItem.title}
+                      content={noteItem.content}
+                      onDelete={deleteNote}
+                      color={noteItem.color}
+                  />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
         <Footer />
       </div>
   );
