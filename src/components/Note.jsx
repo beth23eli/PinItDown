@@ -29,14 +29,13 @@ function Note(props) {
     <div className="note"
          ref={setNodeRef}
          style={style}
-         {...attributes}
-         {...listeners}>
+         {...attributes}>
         <div className={"note__content"}>
             <h1>{props.title}</h1>
             <p>{props.content}</p>
         </div>
         <div className={"note__buttons"}>
-            <button  className={"grip_button"}><Grip /></button>
+            <button {...listeners} className={"grip_button"}><Grip /></button>
             <button onClick={handleClick}>
                 <DeleteIcon/>
             </button>
