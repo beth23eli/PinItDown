@@ -15,9 +15,9 @@
     "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.11",
     "algoliasearch": "^4.24.0",
-    "react": "^17.0.2",
+    "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
-    "react-dom": "^17.0.2",
+    "react-dom": "^18.3.1",
     "react-instantsearch-dom": "^6.40.4"
   },
   "devDependencies": {
