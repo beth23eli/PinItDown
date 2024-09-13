@@ -60,5 +60,6 @@ To run the project locally, follow these steps:
 
 ## Video
 
-https://github.com/user-attachments/assets/bb4e2a1f-823e-4c8a-a2f8-583f8f1feed4
+[PinItDown_video.webm](https://github.com/user-attachments/assets/e02a3811-5f48-40c3-ae0f-49cf67bcb0dc)
+
 
