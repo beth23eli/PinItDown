@@ -94,6 +94,8 @@ html {
       flex-wrap: wrap;
     }
     .note {
+      display: flex;
+      justify-content: space-between;
       background: #fff;
       border-radius: 7px;
       box-shadow: 0 2px 5px #ccc;
@@ -102,27 +104,41 @@ html {
       margin: 16px;
       float: left;
 
-      h1 {
-        font-size: 1.1em;
-        margin-bottom: 6px;
+      .note__content {
+        display: flex;
+        flex-direction: column;
+        h1 {
+          font-size: 1.1em;
+          margin-bottom: 6px;
+        }
+        p {
+          font-size: 1.1em;
+          margin-bottom: 10px;
+          white-space: pre-wrap;
+          word-wrap: break-word;
+        }
       }
-      p {
-        font-size: 1.1em;
-        margin-bottom: 10px;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-      }
-      button {
-        position: relative;
-        float: right;
-        margin-right: 10px;
-        color: #f5ba13;
-        border: none;
-        width: 36px;
-        height: 36px;
-        cursor: pointer;
-        outline: none;
-        background: transparent;
+
+      .note__buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+
+        button {
+          position: relative;
+          float: right;
+          color: #f5ba13;
+          border: none;
+          width: 36px;
+          height: 36px;
+          cursor: pointer;
+          outline: none;
+          background: transparent;
+        }
+        .grip_button {
+          margin-bottom: 1rem;
+        }
       }
     }
 
