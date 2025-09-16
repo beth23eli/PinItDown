@@ -17,7 +17,6 @@ function Header(props) {
             <div>
                 {isExpanded && (<input name="search"
                                        placeholder="Search a note..."
-                                       onMouseOut={() => expandSearchBar(false)}
                                        onChange={(e) => props.onSearch(e.target.value)}/>)}
                 <SearchIcon className={"search-icon"} onMouseOver={() => expandSearchBar(true)}/>
             </div>

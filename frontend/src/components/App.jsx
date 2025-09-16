@@ -81,7 +81,7 @@ function App() {
             </div>
           </SortableContext>
         </DndContext>
-        <Footer />
+        {/* <Footer /> */}
       </div>
   );
 }
