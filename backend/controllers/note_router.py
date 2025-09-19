@@ -17,7 +17,7 @@ def get_user_notes(user_id, db=Depends(get_db)):
 @router.post("/notes", response_model=NoteResponse, status_code=status.HTTP_201_CREATED)
 def create_note(note: NoteCreate, db=Depends(get_db)):
     note_service = NoteService(db)
-    new_note = note_service.add_note(note.title, note.content, note.user_id)
+    new_note = note_service.add_note(note.title, note.content, note.color, note.user_id)
 
     return new_note
 
@@ -39,6 +39,6 @@ def update_note(note_id, note: NoteUpdate, db=Depends(get_db)):
     if not note_service.get_note(note_id):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
     
-    note = note_service.update_note(note_id, note.title, note.content)
+    note = note_service.update_note(note_id, note.title, note.content, note.color)
 
     return note

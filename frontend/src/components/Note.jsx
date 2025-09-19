@@ -20,9 +20,14 @@ function Note(props) {
         transition,
         backgroundColor: props.color,
     };
+    const [titleEditableState, setTitleEditableState] = useState(false)
 
     function handleClick() {
         props.onDelete(props.id);
+    }
+
+    function handleDoubleClick() {
+
     }
 
   return (
@@ -31,8 +36,9 @@ function Note(props) {
          style={style}
          {...attributes}>
         <div className={"note__content"}>
-            <h1>{props.title}</h1>
+            <h1 onDoubleClick={handleDoubleClick}>{props.title}</h1>
             <p>{props.content}</p>
+            
         </div>
         <div className={"note__buttons"}>
             <button {...listeners} className={"grip_button"}><Grip /></button>
@@ -41,6 +47,7 @@ function Note(props) {
             </button>
         </div>
     </div>
+    
   );
 }
 

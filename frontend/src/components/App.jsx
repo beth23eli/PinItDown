@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
@@ -11,19 +11,60 @@ import {
   SortableContext,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [notes, setNotes] = useState([]);
   const [allNotes, setAllNotes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const user_id = 1
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/notes/${user_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch notes")
+      }
+      return response.json()
+    })
+    .then(fetchedNotes => {
+      setNotes(fetchedNotes)
+      setAllNotes(fetchedNotes)
+    })
+    .catch(error => {
+      console.error(error)
+    });
+  }, []);
 
   function addNote(newNote) {
-    const noteWithId = { ...newNote, id: uuidv4() };
+    const noteToSend = {...newNote, user_id: 1};
 
-    setNotes(prevNotes => [...prevNotes, noteWithId]);
-    setAllNotes(prevNotes => [...prevNotes, noteWithId]);
+    fetch("http://localhost:8080/notes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"  
+      },
+      body: JSON.stringify(noteToSend)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to save note");
+      }
+      return response.json()
+    })
+    .then(savedNote => {
+      setNotes(prevNotes => [...prevNotes, savedNote]);
+      setAllNotes(prevNotes => [...prevNotes, savedNote]);
+    })
+    .catch(error => {
+      console.error(error)
+    });
   }
+
 
   function deleteNote(id) {
     setNotes(prevNotes => {
@@ -32,6 +73,22 @@ function App() {
 
     setAllNotes(prevNotes => {
       return prevNotes.filter((noteItem) => noteItem.id !== id);
+    });
+
+    fetch(`http://localhost:8080/notes/${id}`, { 
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to delete note");
+      }
+      return response.json()
+    })
+    .catch(error => {
+      console.error(error)
     });
   }
 

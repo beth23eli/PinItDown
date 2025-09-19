@@ -61,6 +61,9 @@ html {
         font-family: inherit;
         resize: none;
       }
+      input, &::placeholder {
+        font-weight: bold;
+      }
 
       button {
         position: absolute;
