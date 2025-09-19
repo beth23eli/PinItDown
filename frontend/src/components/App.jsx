@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
-import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
 import {
-  DndContext,
-} from "@dnd-kit/core";
-import {
-  arrayMove,
   SortableContext,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
@@ -15,6 +10,7 @@ import {
 function App() {
   const [notes, setNotes] = useState([]);
   const [allNotes, setAllNotes] = useState([]);
+  const [toEdit, SetToEdit] = useState(false)
   const [searchTerm, setSearchTerm] = useState("");
   const user_id = 1
 
@@ -92,17 +88,32 @@ function App() {
     });
   }
 
-  const handleDragEnd = (event) => {
-    const {active, over} = event;
+  function updateNote(note) {
+    fetch(`http://localhost:8080/notes/${note.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(note)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to update note")
+      }
+      return response.json()
+    })
+    .then(updatedNote => {
+      setNotes(prevNotes => prevNotes.map(note => note.id === updatedNote.id ? updatedNote : note));
+      setAllNotes(prevNotes => prevNotes.map(note => note.id === updatedNote.id ? updatedNote : note));
+      SetToEdit(false)
+    })
+    .catch(error => {
+      console.error(error)
+    });
+  }
 
-    if(active?.id !== over?.id) {
-      setNotes((prev) => {
-        const activeIndex = prev.findIndex((item) => item.id === active?.id);
-        const overIndex = prev.findIndex((item) => item.id === over?.id);
-
-        return arrayMove(prev, activeIndex, overIndex);
-      });
-    }
+  function handleEdit(id, title, content, color) {
+    SetToEdit({id, title, content, color})
   }
 
   function handleSearch(value) {
@@ -119,26 +130,30 @@ function App() {
   return (
       <div>
         <Header onSearch={handleSearch}/>
-        <CreateArea onAdd={addNote} />
+        <CreateArea 
+          onAdd={addNote}
+          onUpdate={updateNote}
+          toEdit={toEdit}
+        />
 
-        <DndContext onDragEnd={handleDragEnd}>
-          <SortableContext items={notes} strategy={horizontalListSortingStrategy}>
-            <div className="allNotes">
-              {notes.map((noteItem) => (
-                  <Note
-                      key={noteItem.id}
-                      item={noteItem}
-                      id={noteItem.id}
-                      title={noteItem.title}
-                      content={noteItem.content}
-                      onDelete={deleteNote}
-                      color={noteItem.color}
-                  />
-              ))}
-            </div>
-          </SortableContext>
-        </DndContext>
-        {/* <Footer /> */}
+        <SortableContext items={notes} strategy={horizontalListSortingStrategy}>
+          <div className="allNotes">
+            {notes.map((noteItem) => (
+                <Note
+                    key={noteItem.id}
+                    item={noteItem}
+                    id={noteItem.id}
+                    title={noteItem.title}
+                    content={noteItem.content}
+                    onDelete={deleteNote}
+                    onUpdate={updateNote}
+                    onEdit={handleEdit}
+                    color={noteItem.color}
+                    
+                />
+            ))}
+          </div>
+        </SortableContext>
       </div>
   );
 }

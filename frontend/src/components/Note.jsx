@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
+import NoteModal from "./NoteModal.jsx"
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Grip } from 'lucide-react';
 import {useSortable} from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+
 
 function Note(props) {
     const {
@@ -20,15 +22,15 @@ function Note(props) {
         transition,
         backgroundColor: props.color,
     };
-    const [titleEditableState, setTitleEditableState] = useState(false)
 
-    function handleClick() {
+    function handleDeleteClick() {
         props.onDelete(props.id);
     }
 
-    function handleDoubleClick() {
-
+    function handleEditClick() {
+        props.onEdit(props.id, props.title, props.content, props.color);
     }
+    
 
   return (
     <div className="note"
@@ -36,13 +38,15 @@ function Note(props) {
          style={style}
          {...attributes}>
         <div className={"note__content"}>
-            <h1 onDoubleClick={handleDoubleClick}>{props.title}</h1>
+            <h1>{props.title}</h1>
             <p>{props.content}</p>
-            
         </div>
         <div className={"note__buttons"}>
-            <button {...listeners} className={"grip_button"}><Grip /></button>
-            <button onClick={handleClick}>
+            {/* <NoteModal/> */}
+            <button onClick={handleEditClick}>
+                <EditIcon/>
+            </button>
+            <button onClick={handleDeleteClick}>
                 <DeleteIcon/>
             </button>
         </div>

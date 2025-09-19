@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { Fab } from "@mui/material";
 import { Zoom } from "@mui/material";
@@ -32,20 +32,37 @@ function CreateArea(props) {
     note.color = noteColor;
   }
 
-  function submitNote(event) {
-    props.onAdd(note);
+  function resetArea() {
     setNote({
       title: "",
       content: "",
-      color: ""
+      color: "#fff"
     });
     setActualColor("#fff");
+  }
+
+  function submitNote(event) {
+    props.onAdd(note);
+    resetArea()
     event.preventDefault();
   }
+
 
   function expand() {
     setExpanded(true);
   }
+
+  useEffect(() => {
+    if (props.toEdit && props.toEdit.id) {
+      setNote({
+        title: props.toEdit.title,
+        content: props.toEdit.content,
+        color: props.toEdit.color || "#fff"
+      });
+      setActualColor(props.toEdit.color)
+      setExpanded(true)
+    }
+  }, [props.toEdit])
 
   return (
     <div>
@@ -73,11 +90,14 @@ function CreateArea(props) {
           return <Color key={index} id={index} color={noteColor} onClick={() => {handleColorChange(noteColor)}}/>
         })}</div>)}
 
-        <Zoom in={isExpanded}>
-          <Fab onClick={submitNote}>
-            <AddIcon/>
-          </Fab>
-        </Zoom>
+  
+        {props.toEdit && props.toEdit.id ? (<button className="update-btn" onClick={e => { e.preventDefault(); props.onUpdate({...note, id: props.toEdit.id }); resetArea();}}>Update</button>) : (
+              <Zoom in={isExpanded}>
+                <Fab sx={{backgroundColor: '#7c8f58ff'}} onClick={submitNote}>
+                  <AddIcon/>
+                </Fab>
+              </Zoom>)
+        }
       </form>
     </div>
   );

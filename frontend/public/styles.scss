@@ -71,13 +71,18 @@ html {
         bottom: -18px;
         background: #f5ba13;
         color: #fff;
-        border: none;
-        border-radius: 50%;
-        width: 36px;
+        border-radius: 20px;
         height: 36px;
+        width: 36px;
+        border: none;
+        padding: 0.6rem;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         cursor: pointer;
         outline: none;
+      }
+      .update-btn {
+        width: auto;
+        font-weight: bold;
       }
 
       .notes-colors {
@@ -124,7 +129,6 @@ html {
           overflow: hidden;
         }
       }
-
       .note__buttons {
         display: flex;
         flex-direction: column;
@@ -142,21 +146,6 @@ html {
           outline: none;
           background: transparent;
         }
-        .grip_button {
-          margin-bottom: 1rem;
-        }
-      }
-    }
-
-    footer {
-      position: absolute;
-      text-align: center;
-      bottom: 0;
-      width: 100%;
-      height: 2.5rem;
-
-      p {
-        color: #ccc;
       }
     }
   }
