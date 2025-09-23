@@ -127,6 +127,10 @@ function App() {
     setNotes(filteredNotes);
   }
 
+  function handleCategoryChoice() {
+
+  }
+
   return (
       <div>
         <Header onSearch={handleSearch}/>
@@ -148,6 +152,7 @@ function App() {
                     onDelete={deleteNote}
                     onUpdate={updateNote}
                     onEdit={handleEdit}
+                    onCategoryClick={handleCategoryChoice}
                     color={noteItem.color}
                     
                 />

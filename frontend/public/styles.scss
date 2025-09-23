@@ -146,6 +146,22 @@ html {
           outline: none;
           background: transparent;
         }
+
+        button, .more-menu button, .note__buttons_btn {
+          position: relative;
+          float: right;
+          color: #f5ba13;
+          border: none;
+          width: 36px;
+          height: 36px;
+          cursor: pointer;
+          outline: none;
+          background: transparent;
+        }
+        .more-menu {
+          display: flex;
+          flex-direction: column;
+        }
       }
     }
   }

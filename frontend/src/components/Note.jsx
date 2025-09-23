@@ -1,9 +1,8 @@
 import React, {useState} from "react";
-import NoteModal from "./NoteModal.jsx"
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useSortable} from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import MoreOptionsComponents from "./MoreOptionsComponents";
 
 
 function Note(props) {
@@ -30,6 +29,10 @@ function Note(props) {
     function handleEditClick() {
         props.onEdit(props.id, props.title, props.content, props.color);
     }
+
+    function handleCategoryClick() {
+        props.onCategoryClick()
+    }
     
 
   return (
@@ -42,11 +45,11 @@ function Note(props) {
             <p>{props.content}</p>
         </div>
         <div className={"note__buttons"}>
-            {/* <NoteModal/> */}
-            <button onClick={handleEditClick}>
-                <EditIcon/>
-            </button>
-            <button onClick={handleDeleteClick}>
+            <MoreOptionsComponents
+                onEditClick={handleEditClick}
+                onCategoryClick={handleCategoryClick}
+            />
+            <button onDeleteClick={handleDeleteClick} className="note__buttons_btn">
                 <DeleteIcon/>
             </button>
         </div>
