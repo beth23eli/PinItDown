@@ -11,4 +11,7 @@ class Note(Base):
     color = Column(String, nullable=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    category_id = Column(Integer, ForeignKey("categories.id"), nullable=True)
+
     user = relationship('User', back_populates='notes')
+    category = relationship('Category', back_populates='notes')

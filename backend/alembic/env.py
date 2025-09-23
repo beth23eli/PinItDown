@@ -7,6 +7,7 @@ from alembic import context
 from models.base import Base
 from models.note import Note
 from models.user import User
+from models.category import Category
 import os
 from dotenv import load_dotenv
 

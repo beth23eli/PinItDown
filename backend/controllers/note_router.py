@@ -1,7 +1,6 @@
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status, HTTPException, Depends
 from services.note_service import NoteService
 from schemas.schema import NoteCreate, NoteResponse, NoteUpdate
-from fastapi import Depends
 from session import get_db
 
 router = APIRouter()

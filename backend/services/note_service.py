@@ -9,8 +9,8 @@ class NoteService:
         note = self.db.get(Note, note_id)
         return note
 
-    def add_note(self, title: str, content: str, color: str, user_id: int):
-        note = Note(title=title, content=content, color=color, user_id=user_id)
+    def add_note(self, title: str, content: str, color: str, user_id: int, category_id: int = None):
+        note = Note(title=title, content=content, color=color, user_id=user_id, category_id=category_id)
 
         self.db.add(note)
         self.db.commit()
@@ -25,12 +25,14 @@ class NoteService:
         self.db.commit()
 
         
-    def update_note(self, note_id, new_title, new_content, new_color):
+    def update_note(self, note_id, new_title, new_content, new_color, new_category):
         note = self.db.query(Note).filter(Note.id == note_id).first()
 
         note.title = new_title
         note.content = new_content
         note.color = new_color
+        note.category_id = new_category
+        
         self.db.commit()
         self.db.refresh(note)
 
