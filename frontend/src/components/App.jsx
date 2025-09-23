@@ -71,7 +71,7 @@ function App() {
       return prevNotes.filter((noteItem) => noteItem.id !== id);
     });
 
-    fetch(`http://localhost:8080/notes/${id}`, { 
+    fetch(`http://localhost:8080/notes/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"

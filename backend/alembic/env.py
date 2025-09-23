@@ -1,6 +1,6 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
+from sqlalchemy import engine_from_config, text
 from sqlalchemy import pool
 
 from alembic import context
@@ -53,7 +53,7 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
-        version_table_schema='dbo',
+        # version_table_schema='dbo',
     )
 
     with context.begin_transaction():
@@ -67,6 +67,7 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
+
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
@@ -74,6 +75,8 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
+        # connection.execute(text("CREATE SCHEMA IF NOT EXISTS dbo"))
+
         context.configure(
             connection=connection, target_metadata=target_metadata
         )
