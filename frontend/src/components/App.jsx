@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
-import Note from "./Note";
-import CreateArea from "./CreateArea";
+import Note from "./noteComponents/Note";
+import CreateArea from "./noteComponents/CreateArea";
 import {
   SortableContext,
   horizontalListSortingStrategy,

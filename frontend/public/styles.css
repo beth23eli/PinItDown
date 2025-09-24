@@ -140,4 +140,39 @@ html body .note .note__buttons button {
   cursor: pointer;
   outline: none;
   background: transparent;
+}
+html body .note .note__buttons .popup-content {
+  background-color: blue;
+}
+
+[id^=popup-] {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+[id^=popup-] .more-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.4rem;
+}
+[id^=popup-] .more-menu button {
+  width: -moz-fit-content;
+  width: fit-content;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+[id^=popup-] [role=tooltip].popup-content {
+  width: -moz-fit-content;
+  width: fit-content;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+}
+[id^=popup-] [role=tooltip].popup-content .more-menu__category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+[data-popup=tooltip].popup-overlay {
+  background: rgba(107, 104, 104, 0.16);
 }/*# sourceMappingURL=styles.css.map */

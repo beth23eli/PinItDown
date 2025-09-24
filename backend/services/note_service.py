@@ -25,7 +25,7 @@ class NoteService:
         self.db.commit()
 
         
-    def update_note(self, note_id, new_title, new_content, new_color, new_category):
+    def update_note(self, note_id, new_title, new_content, new_color, new_category=None):
         note = self.db.query(Note).filter(Note.id == note_id).first()
 
         note.title = new_title

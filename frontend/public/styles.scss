@@ -147,22 +147,40 @@ html {
           background: transparent;
         }
 
-        button, .more-menu button, .note__buttons_btn {
-          position: relative;
-          float: right;
-          color: #f5ba13;
-          border: none;
-          width: 36px;
-          height: 36px;
-          cursor: pointer;
-          outline: none;
-          background: transparent;
+        .popup-content {
+          background-color: blue;
         }
-        .more-menu {
-          display: flex;
-          flex-direction: column;
-        }
+       
       }
     }
   }
+}
+[id^="popup-"] {
+  width: fit-content;
+  .more-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.4rem;
+
+    button {
+      width: fit-content;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  }
+  [role='tooltip'].popup-content {
+    width: fit-content;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+
+    .more-menu__category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+  }
+}
+[data-popup=tooltip].popup-overlay {
+  background: rgba(107, 104, 104, 0.16);
 }
