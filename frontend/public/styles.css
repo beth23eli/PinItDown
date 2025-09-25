@@ -66,7 +66,7 @@ html body form.create-note input, html body form.create-note::placeholder {
 }
 html body form.create-note button {
   position: absolute;
-  right: 18px;
+  right: 10px;
   bottom: -18px;
   background: #f5ba13;
   color: #fff;
@@ -79,9 +79,13 @@ html body form.create-note button {
   cursor: pointer;
   outline: none;
 }
-html body form.create-note .update-btn {
+html body form.create-note .update-btns {
   width: auto;
   font-weight: bold;
+}
+html body form.create-note .cancel-btn {
+  margin-right: 4.2rem;
+  background-color: #d2d1d1;
 }
 html body form.create-note .notes-colors {
   display: flex;
@@ -92,6 +96,15 @@ html body form.create-note .notes-colors div {
   height: 1.2rem;
   border-radius: 50%;
   border: 1px solid #b8b7b7;
+  cursor: pointer;
+}
+html body form.create-note .notes-colors .categories-btn {
+  display: flex;
+  color: #f6c025;
+  cursor: pointer;
+}
+html body .create-note .MuiFab-root {
+  z-index: 1;
 }
 html body .allNotes {
   flex-wrap: wrap;
@@ -141,8 +154,8 @@ html body .note .note__buttons button {
   outline: none;
   background: transparent;
 }
-html body .note .note__buttons .popup-content {
-  background-color: blue;
+html body .note .note__buttons button:hover svg path {
+  filter: drop-shadow(0 2px 5px #ccc);
 }
 
 [id^=popup-] {
@@ -171,8 +184,4 @@ html body .note .note__buttons .popup-content {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-}
-
-[data-popup=tooltip].popup-overlay {
-  background: rgba(107, 104, 104, 0.16);
 }/*# sourceMappingURL=styles.css.map */

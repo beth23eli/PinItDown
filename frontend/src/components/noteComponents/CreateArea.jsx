@@ -3,6 +3,9 @@ import AddIcon from "@mui/icons-material/Add";
 import { Fab } from "@mui/material";
 import { Zoom } from "@mui/material";
 import Color from "./Color.jsx";
+import ClassIcon from '@mui/icons-material/Class';
+import Popup from 'reactjs-popup';
+
 
 function CreateArea(props) {
   const colors = ["#fff","#a2d8fb", "#fbe0b4", "#ebcff6", "#b6f4d0"]
@@ -12,7 +15,8 @@ function CreateArea(props) {
   const [note, setNote] = useState({
     title: "",
     content: "",
-    color: "#fff"
+    color: "#fff",
+    category_id: null
   });
 
   function handleChange(event) {
@@ -29,21 +33,26 @@ function CreateArea(props) {
   function handleColorChange(noteColor) {
     setActualColor(noteColor);
 
-    note.color = noteColor;
+    setNote(prevNote => ({
+      ...prevNote,
+      color: noteColor
+    }));
   }
 
   function resetArea() {
     setNote({
       title: "",
       content: "",
-      color: "#fff"
+      color: "#fff",
+      category_id: null
     });
     setActualColor("#fff");
   }
 
   function submitNote(event) {
     props.onAdd(note);
-    resetArea()
+    resetArea();
+    collapse();
     event.preventDefault();
   }
 
@@ -52,12 +61,24 @@ function CreateArea(props) {
     setExpanded(true);
   }
 
+  function collapse() {
+    setExpanded(false);
+  }
+
+  function handleCategoryClick(categoryId) {
+    setNote(prevNote => ({
+      ...prevNote,
+      category_id: categoryId
+    }));
+  }
+
   useEffect(() => {
     if (props.toEdit && props.toEdit.id) {
       setNote({
         title: props.toEdit.title,
         content: props.toEdit.content,
-        color: props.toEdit.color || "#fff"
+        color: props.toEdit.color || "#fff",
+        category_id: props.toEdit.category_id || null
       });
       setActualColor(props.toEdit.color)
       setExpanded(true)
@@ -86,17 +107,73 @@ function CreateArea(props) {
             rows={isExpanded ? 3 : 1}
             style={{backgroundColor: actualColor}}
         />
-        {isExpanded && (<div className="notes-colors">{colors.map((noteColor, index) => {
-          return <Color key={index} id={index} color={noteColor} onClick={() => {handleColorChange(noteColor)}}/>
-        })}</div>)}
+        {isExpanded && (
+          <div className="notes-colors">
+            {colors.map((noteColor, index) => {
+              return (
+                <div key={index} >
+                  <Color 
+                    id={index} 
+                    color={noteColor} 
+                    onClick={() => {handleColorChange(noteColor)}}
+                  />
+                </div>
+              )})}
 
-  
-        {props.toEdit && props.toEdit.id ? (<button className="update-btn" onClick={e => { e.preventDefault(); props.onUpdate({...note, id: props.toEdit.id }); resetArea();}}>Update</button>) : (
+              <Popup
+                trigger={<ClassIcon className="categories-btn"/>}
+                position={"bottom center"}
+                nested
+                overlayStyle={{ background: 'rgba(0,0,0,0.5)' }}
+              >
+                <div className="categories-list">
+                  {props.categories.map((categoryItem) => (
+                    <p 
+                      onClick={() => handleCategoryClick(categoryItem.id)} 
+                      key={categoryItem.id}
+                      style={{ cursor: 'pointer', fontWeight: note.category_id === categoryItem.id ? 'bold' : 'normal' }}
+                    >
+                      {categoryItem.name}
+                    </p>
+                  ))}
+                </div>
+              </Popup>
+          </div>
+        )}
+      
+        {props.toEdit && props.toEdit.id ? (
+          <div style={{ display: "flex", gap: "8px" }}>
+            <button
+              type="button"
+              className="update-btns cancel-btn"
+              onClick={e => {
+                e.preventDefault();
+                resetArea();
+                collapse();
+                props.onCancelEdit();
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="update-btns"
+              onClick={e => {
+                e.preventDefault();
+                props.onUpdate({ ...note, id: props.toEdit.id });
+                resetArea();
+                collapse();
+              }}
+            >
+              Update
+            </button>
+          </div>
+        ) : (
               <Zoom in={isExpanded}>
                 <Fab sx={{backgroundColor: '#7c8f58ff'}} onClick={submitNote}>
                   <AddIcon/>
                 </Fab>
-              </Zoom>)
+              </Zoom>
+            )
         }
       </form>
     </div>

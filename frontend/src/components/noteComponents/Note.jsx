@@ -27,7 +27,7 @@ function Note(props) {
     }
 
     function handleEditClick() {
-        props.onEdit(props.id, props.title, props.content, props.color);
+        props.onEdit(props.id, props.title, props.content, props.color, props.category_id);
     }
 
     function handleCategoryClick() {
@@ -49,7 +49,7 @@ function Note(props) {
                 onEditClick={handleEditClick}
                 onCategoryClick={handleCategoryClick}
             />
-            <button onDeleteClick={handleDeleteClick} className="note__buttons_btn">
+            <button onClick={handleDeleteClick} className="note__buttons_btn">
                 <DeleteIcon/>
             </button>
         </div>

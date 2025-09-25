@@ -8,10 +8,6 @@ import ClassIcon from '@mui/icons-material/Class';
 
 export default function MoreMenuComponent(props) {
 
-    function handleCategoryClick() {
-        props.onCategoryClick()
-    }
-
 
     return (
         <>
@@ -19,6 +15,7 @@ export default function MoreMenuComponent(props) {
                 trigger={<button><MoreVertIcon/></button>}
                 position={"right center"}
                 nested
+                overlayStyle={{ background: 'rgba(0,0,0,0.5)' }}
             >
                 {close => (
                     <div className="more-menu">
@@ -34,9 +31,9 @@ export default function MoreMenuComponent(props) {
                             trigger={<button className="note__buttons_btn"><ClassIcon/></button>}
                             position={"bottom center"}
                             nested
+                            overlayStyle={{ background: 'rgba(0,0,0,0.5)' }}
                         >
                             <div className="more-menu__category-list">
-                                <button onClick={handleCategoryClick}>Category 1</button>
                                 <button>Category 2</button>
                             </div>
                         </Popup>

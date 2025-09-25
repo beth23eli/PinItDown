@@ -67,7 +67,7 @@ html {
 
       button {
         position: absolute;
-        right: 18px;
+        right: 10px;
         bottom: -18px;
         background: #f5ba13;
         color: #fff;
@@ -80,9 +80,13 @@ html {
         cursor: pointer;
         outline: none;
       }
-      .update-btn {
+      .update-btns {
         width: auto;
         font-weight: bold;
+      }
+      .cancel-btn {
+        margin-right: 4.2rem;
+        background-color: #d2d1d1;
       }
 
       .notes-colors {
@@ -94,8 +98,20 @@ html {
           height: 1.2rem;
           border-radius: 50%;
           border: 1px solid #b8b7b7;
+          cursor: pointer;
+        }
+
+        .categories-btn {
+          display: flex;
+          color: #f6c025;
+          cursor: pointer;
         }
       }
+    }
+    .create-note {
+      .MuiFab-root {
+          z-index: 1; 
+        }  
     }
 
     .allNotes {
@@ -145,17 +161,20 @@ html {
           cursor: pointer;
           outline: none;
           background: transparent;
-        }
 
-        .popup-content {
-          background-color: blue;
-        }
-       
+          &:hover svg path {
+            filter: drop-shadow(0 2px 5px #ccc);
+          }
+        }     
       }
     }
   }
 }
 [id^="popup-"] {
+  // [data-popup=tooltip].popup-overlay {
+  //   // background-color: #f5ba13;
+  //   z-index: 999 !important;
+  // }
   width: fit-content;
   .more-menu {
     display: flex;
@@ -180,7 +199,4 @@ html {
       gap: 0.3rem;
     }
   }
-}
-[data-popup=tooltip].popup-overlay {
-  background: rgba(107, 104, 104, 0.16);
 }

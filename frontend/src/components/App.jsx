@@ -10,9 +10,11 @@ import {
 function App() {
   const [notes, setNotes] = useState([]);
   const [allNotes, setAllNotes] = useState([]);
-  const [toEdit, SetToEdit] = useState(false)
+  const [toEdit, SetToEdit] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const user_id = 1
+  const user_id = 1;
+  const [allCategories, setAllCategories] = useState([]);
+
 
   useEffect(() => {
     fetch(`http://localhost:8080/notes/${user_id}`, {
@@ -30,6 +32,27 @@ function App() {
     .then(fetchedNotes => {
       setNotes(fetchedNotes)
       setAllNotes(fetchedNotes)
+    })
+    .catch(error => {
+      console.error(error)
+    });
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/categories", {
+      method: "GET",
+      headers: {
+        "Content-Type" : "application/json"
+      },
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch categories");
+      }
+      return response.json()
+    })
+    .then(fetchedCategories => {
+      setAllCategories(fetchedCategories)
     })
     .catch(error => {
       console.error(error)
@@ -112,8 +135,8 @@ function App() {
     });
   }
 
-  function handleEdit(id, title, content, color) {
-    SetToEdit({id, title, content, color})
+  function handleEdit(id, title, content, color, category_id) {
+    SetToEdit({id, title, content, color, category_id})
   }
 
   function handleSearch(value) {
@@ -128,7 +151,7 @@ function App() {
   }
 
   function handleCategoryChoice() {
-
+    const noteToSend = {...newNote, user_id: 1};
   }
 
   return (
@@ -138,6 +161,9 @@ function App() {
           onAdd={addNote}
           onUpdate={updateNote}
           toEdit={toEdit}
+          categories={allCategories}
+          onCancelEdit={() => SetToEdit(false)}
+          onCategoryClick={handleCategoryChoice}
         />
 
         <SortableContext items={notes} strategy={horizontalListSortingStrategy}>
@@ -149,12 +175,11 @@ function App() {
                     id={noteItem.id}
                     title={noteItem.title}
                     content={noteItem.content}
+                    category_id={noteItem.category_id}
                     onDelete={deleteNote}
                     onUpdate={updateNote}
                     onEdit={handleEdit}
-                    onCategoryClick={handleCategoryChoice}
                     color={noteItem.color}
-                    
                 />
             ))}
           </div>
