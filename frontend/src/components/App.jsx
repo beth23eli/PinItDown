@@ -7,6 +7,7 @@ import {
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
+
 function App() {
   const [notes, setNotes] = useState([]);
   const [allNotes, setAllNotes] = useState([]);
@@ -30,6 +31,7 @@ function App() {
       return response.json()
     })
     .then(fetchedNotes => {
+      fetchedNotes.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       setNotes(fetchedNotes)
       setAllNotes(fetchedNotes)
     })
@@ -76,8 +78,8 @@ function App() {
       return response.json()
     })
     .then(savedNote => {
-      setNotes(prevNotes => [...prevNotes, savedNote]);
-      setAllNotes(prevNotes => [...prevNotes, savedNote]);
+      setNotes(prevNotes => [savedNote, ...prevNotes]);
+      setAllNotes(prevNotes => [savedNote, ...prevNotes]);
     })
     .catch(error => {
       console.error(error)
@@ -126,8 +128,14 @@ function App() {
       return response.json()
     })
     .then(updatedNote => {
-      setNotes(prevNotes => prevNotes.map(note => note.id === updatedNote.id ? updatedNote : note));
-      setAllNotes(prevNotes => prevNotes.map(note => note.id === updatedNote.id ? updatedNote : note));
+      setNotes(prevNotes => [
+        updatedNote,
+        ...prevNotes.filter(n => n.id !== updatedNote.id)
+      ]);
+      setAllNotes(prevNotes => [
+        updatedNote,
+        ...prevNotes.filter(n => n.id !== updatedNote.id)
+      ]);
       SetToEdit(false)
     })
     .catch(error => {
@@ -150,10 +158,6 @@ function App() {
     setNotes(filteredNotes);
   }
 
-  function handleCategoryChoice() {
-    const noteToSend = {...newNote, user_id: 1};
-  }
-
   return (
       <div>
         <Header onSearch={handleSearch}/>
@@ -163,25 +167,29 @@ function App() {
           toEdit={toEdit}
           categories={allCategories}
           onCancelEdit={() => SetToEdit(false)}
-          onCategoryClick={handleCategoryChoice}
         />
 
         <SortableContext items={notes} strategy={horizontalListSortingStrategy}>
           <div className="allNotes">
-            {notes.map((noteItem) => (
+            {notes.map((noteItem) => {
+              const category = allCategories.find(cat => cat.id === noteItem.category_id);
+              return (
                 <Note
-                    key={noteItem.id}
-                    item={noteItem}
-                    id={noteItem.id}
-                    title={noteItem.title}
-                    content={noteItem.content}
-                    category_id={noteItem.category_id}
-                    onDelete={deleteNote}
-                    onUpdate={updateNote}
-                    onEdit={handleEdit}
-                    color={noteItem.color}
+                  key={noteItem.id}
+                  item={noteItem}
+                  id={noteItem.id}
+                  title={noteItem.title}
+                  content={noteItem.content}
+                  category_id={noteItem.category_id}
+                  category_name={category ? category.name : ''}
+                  created_at={noteItem.created_at}
+                  onDelete={deleteNote}
+                  onUpdate={updateNote}
+                  onEdit={handleEdit}
+                  color={noteItem.color}
                 />
-            ))}
+              );
+            })}
           </div>
         </SortableContext>
       </div>

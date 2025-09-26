@@ -9,7 +9,7 @@ class Note(Base):
     title = Column(String, nullable=True)
     content = Column(Text, nullable=False)
     color = Column(String, nullable=False)
-    created_at = Column(DateTime, server_default=func.now(), nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.timezone('UTC', func.now()), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     category_id = Column(Integer, ForeignKey("categories.id"), nullable=True)
 

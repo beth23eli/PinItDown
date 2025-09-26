@@ -124,6 +124,7 @@ html body .note {
 html body .note .note__content {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 html body .note .note__content h1 {
   font-size: 1.1em;
@@ -136,6 +137,16 @@ html body .note .note__content p {
   word-wrap: break-word;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+html body .note .note__content .note__content__category {
+  background-color: #f5ba13;
+  padding: 0.2rem 0.4rem;
+  border-radius: 10px;
+  margin-bottom: 0;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
 }
 html body .note .note__buttons {
   display: flex;
@@ -156,6 +167,9 @@ html body .note .note__buttons button {
 }
 html body .note .note__buttons button:hover svg path {
   filter: drop-shadow(0 2px 5px #ccc);
+}
+html body .note .note__buttons .note__buttons__delete {
+  margin-bottom: -0.5rem;
 }
 
 [id^=popup-] {

@@ -3,6 +3,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {useSortable} from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import MoreOptionsComponents from "./MoreOptionsComponent";
+import Tooltip from '@mui/material/Tooltip';
+import { format } from 'date-fns';
+
+
 
 
 function Note(props) {
@@ -21,6 +25,9 @@ function Note(props) {
         transition,
         backgroundColor: props.color,
     };
+    const date = new Date([props.created_at]);
+    const formatted = format(date, "HH:mm dd/MM/yyyy");
+
 
     function handleDeleteClick() {
         props.onDelete(props.id);
@@ -33,6 +40,7 @@ function Note(props) {
     function handleCategoryClick() {
         props.onCategoryClick()
     }
+
     
 
   return (
@@ -40,16 +48,23 @@ function Note(props) {
          ref={setNodeRef}
          style={style}
          {...attributes}>
-        <div className={"note__content"}>
-            <h1>{props.title}</h1>
-            <p>{props.content}</p>
-        </div>
+            <Tooltip title={`${formatted}`} placement="top">
+                <div className={"note__content"}>
+                    <div className="note__content__main-part">
+                        <h1>{props.title}</h1>
+                        <p>{props.content}</p>
+                    </div>
+                    <p className={props.category_name ? "note__content__category" : ''}>
+                        {props.category_name}
+                    </p>
+                </div>
+            </Tooltip>
         <div className={"note__buttons"}>
             <MoreOptionsComponents
                 onEditClick={handleEditClick}
                 onCategoryClick={handleCategoryClick}
             />
-            <button onClick={handleDeleteClick} className="note__buttons_btn">
+            <button onClick={handleDeleteClick} className="note__buttons__delete">
                 <DeleteIcon/>
             </button>
         </div>

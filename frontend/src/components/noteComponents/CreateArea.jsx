@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { Fab } from "@mui/material";
 import { Zoom } from "@mui/material";
-import Color from "./Color.jsx";
+import ColorPicker from "./Color.jsx";
 import ClassIcon from '@mui/icons-material/Class';
 import Popup from 'reactjs-popup';
+import Tooltip from '@mui/material/Tooltip';
 
 
 function CreateArea(props) {
-  const colors = ["#fff","#a2d8fb", "#fbe0b4", "#ebcff6", "#b6f4d0"]
-
   const [actualColor, setActualColor] = useState("#fff");
   const [isExpanded, setExpanded] = useState(false);
   const [note, setNote] = useState({
@@ -109,34 +108,27 @@ function CreateArea(props) {
         />
         {isExpanded && (
           <div className="notes-colors">
-            {colors.map((noteColor, index) => {
-              return (
-                <div key={index} >
-                  <Color 
-                    id={index} 
-                    color={noteColor} 
-                    onClick={() => {handleColorChange(noteColor)}}
-                  />
-                </div>
-              )})}
+              <ColorPicker color={actualColor} onChange={handleColorChange}/>
 
               <Popup
-                trigger={<ClassIcon className="categories-btn"/>}
+                trigger={<Tooltip title="Note category"><ClassIcon className="categories-btn"></ClassIcon></Tooltip>}
                 position={"bottom center"}
                 nested
                 overlayStyle={{ background: 'rgba(0,0,0,0.5)' }}
               >
-                <div className="categories-list">
-                  {props.categories.map((categoryItem) => (
-                    <p 
-                      onClick={() => handleCategoryClick(categoryItem.id)} 
-                      key={categoryItem.id}
-                      style={{ cursor: 'pointer', fontWeight: note.category_id === categoryItem.id ? 'bold' : 'normal' }}
-                    >
-                      {categoryItem.name}
-                    </p>
-                  ))}
-                </div>
+                {close => (
+                  <div className="categories-list">
+                    {props.categories.map((categoryItem) => (
+                      <p 
+                        onClick={() => {handleCategoryClick(categoryItem.id); close();}} 
+                        key={categoryItem.id}
+                        style={{ cursor: 'pointer', fontWeight: note.category_id === categoryItem.id ? 'bold' : 'normal' }}
+                      >
+                        {categoryItem.name}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </Popup>
           </div>
         )}
