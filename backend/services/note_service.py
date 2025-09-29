@@ -1,5 +1,6 @@
 from models.note import Note
 from sqlalchemy.orm import Session
+import datetime
 
 class NoteService:
     def __init__(self, db: Session):
@@ -32,6 +33,7 @@ class NoteService:
         note.content = new_content
         note.color = new_color
         note.category_id = new_category
+        note.created_at = datetime.datetime.utcnow()
         
         self.db.commit()
         self.db.refresh(note)

@@ -1,5 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel
+import datetime
 
 class NoteCreate(BaseModel):
     title: str
@@ -14,12 +15,14 @@ class NoteUpdate(BaseModel):
     color: str
     category_id: Optional[int] = None
 
+
 class NoteResponse(BaseModel):
     id: int
     title: str
     content: str
     color: str
     category_id: Optional[int] = None
+    created_at: datetime.datetime
     class Config:
         orm_mode = True
 

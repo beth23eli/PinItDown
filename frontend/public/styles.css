@@ -126,17 +126,18 @@ html body .note .note__content {
   flex-direction: column;
   justify-content: space-between;
 }
-html body .note .note__content h1 {
-  font-size: 1.1em;
-  margin-bottom: 6px;
-}
-html body .note .note__content p {
-  font-size: 1.1em;
-  margin-bottom: 10px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  text-overflow: ellipsis;
+html body .note .note__content .note__content__main-part .cont {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
   overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  max-height: 5em;
+}
+html body .note .note__content .note__content__main-part h1 {
+  font-size: 1.3rem;
 }
 html body .note .note__content .note__content__category {
   background-color: #f5ba13;
@@ -147,6 +148,8 @@ html body .note .note__content .note__content__category {
   font-size: 0.9rem;
   font-weight: 500;
   text-align: center;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 html body .note .note__buttons {
   display: flex;
@@ -198,4 +201,71 @@ html body .note .note__buttons .note__buttons__delete {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+}
+[id^=popup-] .extended-note-content {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 10px;
+}
+[id^=popup-] .extended-note-content .close {
+  font-size: 2rem;
+  margin-top: -1rem;
+  margin-right: -2.8rem;
+  cursor: pointer;
+}
+[id^=popup-] .extended-note-content .extended-note__content {
+  display: flex;
+}
+[id^=popup-] .extended-note-content .extended-note__content h3 {
+  align-self: center;
+}
+[id^=popup-] .extended-note-content .extended-note__content .top-part {
+  display: flex;
+  flex-direction: column;
+  width: 97%;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+[id^=popup-] .extended-note-content .extended-note__content .top-part .MuiTextField-root {
+  margin: 1rem 1.5rem 0;
+}
+[id^=popup-] .extended-note-content #edit-btn {
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: #f5ba13;
+  padding: 0.5rem 4rem;
+  border: none;
+  border-radius: 10px;
+  align-self: center;
+  margin-top: -0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+[id^=popup-] .extended-note-content #edit-btn:hover {
+  background-color: #eeb20f;
+}
+[id^=popup-] .extended-note-content .bottom-part {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.7rem;
+  align-items: end;
+  width: 97%;
+}
+[id^=popup-] .extended-note-content .bottom-part .note__content__category {
+  background-color: #c8c8c8;
+  padding: 0.4rem 0.7rem;
+  border-radius: 10px;
+  margin-bottom: 0;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+[id^=popup-] .extended-note-content .bottom-part h4 {
+  color: #b8b7b7;
 }/*# sourceMappingURL=styles.css.map */

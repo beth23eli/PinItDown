@@ -3,8 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Popup from 'reactjs-popup';
 import "reactjs-popup/dist/index.css";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import ClassIcon from '@mui/icons-material/Class';
-
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 export default function MoreMenuComponent(props) {
 
@@ -16,6 +15,7 @@ export default function MoreMenuComponent(props) {
                 position={"right center"}
                 nested
                 overlayStyle={{ background: 'rgba(0,0,0,0.5)' }}
+                closeOnDocumentClick
             >
                 {close => (
                     <div className="more-menu">
@@ -26,17 +26,10 @@ export default function MoreMenuComponent(props) {
                         className="note__buttons_btn"> 
                             <EditIcon/>
                         </button>
-
-                        <Popup
-                            trigger={<button className="note__buttons_btn"><ClassIcon/></button>}
-                            position={"bottom center"}
-                            nested
-                            overlayStyle={{ background: 'rgba(0,0,0,0.5)' }}
-                        >
-                            <div className="more-menu__category-list">
-                                <button>Category 2</button>
-                            </div>
-                        </Popup>
+                        
+                        <button onClick={() => props.onOpenNote()}>
+                            <OpenInNewIcon/>
+                        </button>
                     </div>
                 )}
             </Popup>

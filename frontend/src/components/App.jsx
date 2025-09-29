@@ -154,7 +154,6 @@ function App() {
         note.title.toLowerCase().includes(value.toLowerCase()) ||
         note.content.toLowerCase().includes(value.toLowerCase())
     );
-
     setNotes(filteredNotes);
   }
 
@@ -182,11 +181,12 @@ function App() {
                   content={noteItem.content}
                   category_id={noteItem.category_id}
                   category_name={category ? category.name : ''}
+                  categories={allCategories}
                   created_at={noteItem.created_at}
+                  color={noteItem.color}
                   onDelete={deleteNote}
                   onUpdate={updateNote}
                   onEdit={handleEdit}
-                  color={noteItem.color}
                 />
               );
             })}
