@@ -87,21 +87,27 @@ html body form.create-note .cancel-btn {
   margin-right: 4.2rem;
   background-color: #d2d1d1;
 }
-html body form.create-note .notes-colors {
+html body form.create-note .note-options {
   display: flex;
   gap: 0.1rem;
 }
-html body form.create-note .notes-colors div {
+html body form.create-note .note-options .notes-colors {
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 50%;
   border: 1px solid #b8b7b7;
   cursor: pointer;
 }
-html body form.create-note .notes-colors .categories-btn {
+html body form.create-note .note-options .categories-btn {
   display: flex;
   color: #f6c025;
   cursor: pointer;
+  border: none;
+}
+html body form.create-note .note-options .edit-choices {
+  margin-left: 3rem;
+  display: flex;
+  border: none;
 }
 html body .create-note .MuiFab-root {
   z-index: 1;

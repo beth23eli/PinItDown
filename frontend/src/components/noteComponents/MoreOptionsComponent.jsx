@@ -27,7 +27,7 @@ export default function MoreMenuComponent(props) {
                             <EditIcon/>
                         </button>
                         
-                        <button onClick={() => props.onOpenNote()}>
+                        <button onClick={() => {props.onOpenNote(); close()}}>
                             <OpenInNewIcon/>
                         </button>
                     </div>

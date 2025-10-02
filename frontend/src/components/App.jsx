@@ -62,6 +62,9 @@ function App() {
   }, []);
 
   function addNote(newNote) {
+    if (newNote.content == "" && newNote.title == "") 
+      return;
+    
     const noteToSend = {...newNote, user_id: 1};
 
     fetch("http://localhost:8080/notes", {

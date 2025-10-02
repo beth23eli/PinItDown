@@ -6,7 +6,7 @@ import Popup from "reactjs-popup";
 export default function ColorPicker({color, onChange}) {
     return (
         <Popup 
-            trigger={<div style={{backgroundColor: "#fff"}}/>}
+            trigger={<div className="notes-colors" style={{backgroundColor: "#fff"}}/>}
             position={"bottom center"}
             nested
             closeOnDocumentClick

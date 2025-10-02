@@ -42,7 +42,6 @@ def upgrade() -> None:
     if_not_exists=True
     )
     # op.execute("INSERT INTO dbo.users (name) VALUES ('Alice')")
-    op.execute("INSERT INTO users (name) VALUES ('Alice')")
     # ### end Alembic commands ###
 
 

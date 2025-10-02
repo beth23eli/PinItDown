@@ -6,6 +6,7 @@ import ColorPicker from "./Color.jsx";
 import ClassIcon from '@mui/icons-material/Class';
 import Popup from 'reactjs-popup';
 import Tooltip from '@mui/material/Tooltip';
+import NoteEditBar from "./noteEditBar.jsx";
 
 
 function CreateArea(props) {
@@ -107,7 +108,7 @@ function CreateArea(props) {
             style={{backgroundColor: actualColor}}
         />
         {isExpanded && (
-          <div className="notes-colors">
+          <div className="note-options">
               <ColorPicker color={actualColor} onChange={handleColorChange}/>
 
               <Popup
@@ -130,6 +131,8 @@ function CreateArea(props) {
                   </div>
                 )}
               </Popup>
+              
+              <NoteEditBar onClickBold={handleClickBold} onClickItalic={handleClickItalic} onClickUnderlined={handleClickUnderlined}/>
           </div>
         )}
       

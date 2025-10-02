@@ -7,6 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { format } from 'date-fns';
 import Popup from "reactjs-popup";
 import { TextField } from "@mui/material";
+import Select from 'react-select';
 
 
 function Note(props) {
@@ -68,6 +69,13 @@ function Note(props) {
             content: editContent,
             category_id: editCategory || null
         })
+    }
+
+    function formatCategories() {
+        return props.categories.map((category) => ({
+            value: category.id,
+            label: category.name
+        }))
     }
     
 
@@ -148,15 +156,11 @@ function Note(props) {
                             {props.category_name}
                         </p> 
                         : 
-                        <select 
-                            value={editCategory ? editCategory : 'No category'} 
-                            onChange={(e) => setEditCategory(Number(e.target.value))}
-                        >
-                            <option value={null}>No category</option>
-                            {props.categories.map((category) => (
-                                <option key={category.id} value={category.id}>{category.name}</option>
-                            ))}
-                        </select>
+                        <Select 
+                            options={formatCategories()}
+                            value={formatCategories().find(opt => opt.value === editCategory)}
+                            onChange={option => setEditCategory(option ? option.value : null)}
+                        />
                     }
                     <h4>{formatted}</h4>
                 </div>                
