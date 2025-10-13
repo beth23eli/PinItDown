@@ -1,9 +1,12 @@
 from fastapi import APIRouter, status, HTTPException, Depends
 from services.note_service import NoteService
+from services.rabbitmq_service import RabbitMQService
 from schemas.schema import NoteCreate, NoteResponse, NoteUpdate
 from session import get_db
+import json
 
 router = APIRouter()
+EVENT_QUEUE = "notes_event"
 
 @router.get("/notes/{user_id}", status_code=status.HTTP_200_OK)
 def get_user_notes(user_id, db=Depends(get_db)):
@@ -18,6 +21,17 @@ def create_note(note: NoteCreate, db=Depends(get_db)):
     note_service = NoteService(db)
     new_note = note_service.add_note(note.title, note.content, note.color, note.user_id, note.category_id)
 
+    rabbitmq = RabbitMQService()
+    rabbitmq.publish(
+        queue_name=EVENT_QUEUE,
+        message=json.dumps({
+            "event": "note_created",
+            "note_id": new_note.id,
+            "user_id": new_note.user_id,
+            "title": new_note.title,
+        })
+    )
+    rabbitmq.close()
     return new_note
 
 

@@ -131,8 +131,6 @@ function CreateArea(props) {
                   </div>
                 )}
               </Popup>
-              
-              <NoteEditBar onClickBold={handleClickBold} onClickItalic={handleClickItalic} onClickUnderlined={handleClickUnderlined}/>
           </div>
         )}
       
