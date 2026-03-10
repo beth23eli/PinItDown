@@ -51,9 +51,10 @@ services:
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
     ports:
-      - "8080:8080"
+      - "8080:8000"
     volumes:
       - ./backend:/app
+      - backend_venv:/app/.venv
 
   consumer:
     container_name: consumer
@@ -65,7 +66,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: python -u consumer.py
+    command: uv run consumer.py
     env_file:
       - .env
     environment:
@@ -73,6 +74,7 @@ services:
       RABBITMQ_PORT: 5672
     volumes:
       - ./backend:/app
+      - backend_venv:/app/.venv
     restart: on-failure
 
   client:
@@ -89,3 +91,4 @@ services:
 
 volumes:
   pgdata:
+  backend_venv:

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status
-from session import get_db
-from services.user_service import UserService
-from schemas.schema import UserCreate, UserResponse
+from app.session import get_db
+from app.services.user_service import UserService
+from app.schemas.schema import UserCreate, UserResponse
 
 router = APIRouter()
 

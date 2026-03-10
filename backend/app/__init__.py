@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from controllers import note_router, user_router, category_router
+from app.routers import note_router, user_router, category_router
 
 
 

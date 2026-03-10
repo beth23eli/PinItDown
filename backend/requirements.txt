@@ -6,5 +6,5 @@ fastapi==0.95.2
 uvicorn==0.21.1
 Jinja2==3.1.6
 python-dotenv==1.1.1
-psycopg2~=2.9.10
+psycopg2-binary==2.9.11
 pika

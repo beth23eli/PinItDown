@@ -1,8 +1,8 @@
 from fastapi import APIRouter, status, HTTPException, Depends
-from services.note_service import NoteService
-from services.rabbitmq_service import RabbitMQService
-from schemas.schema import NoteCreate, NoteResponse, NoteUpdate
-from session import get_db
+from app.services.note_service import NoteService
+from app.services.rabbitmq_service import RabbitMQService
+from app.schemas.schema import NoteCreate, NoteResponse, NoteUpdate
+from app.session import get_db
 import json
 
 router = APIRouter()

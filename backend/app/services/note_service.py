@@ -1,4 +1,4 @@
-from models.note import Note
+from app.models.note import Note
 from sqlalchemy.orm import Session
 import datetime
 

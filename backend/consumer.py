@@ -1,4 +1,4 @@
-from services.rabbitmq_service import RabbitMQService
+from app.services.rabbitmq_service import RabbitMQService
 import json
 
 QUEUE = "notes_event"

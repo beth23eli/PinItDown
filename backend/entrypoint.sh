@@ -1,3 +1,5 @@
 #!/bin/sh
-alembic upgrade head
-exec uvicorn main:app --host 0.0.0.0 --port 8080 --reload
+set -e
+
+uv run alembic upgrade head
+exec uv run uvicorn main:app --host 0.0.0.0 --port 8000 --reload
